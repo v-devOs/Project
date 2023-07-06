@@ -1,10 +1,9 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import { courses } from '@/classroom'
+import { classroom_v1 } from 'googleapis'
 import type { NextApiRequest, NextApiResponse } from 'next'
+import { courses } from '@/classroom'
 
-type Data = {
-  message: string
-}
+type Data = { message: string } | classroom_v1.Schema$ListCoursesResponse
 
 export default async function handler(
   req: NextApiRequest,
@@ -16,9 +15,8 @@ export default async function handler(
 
     const data = await courses.getCourses()
 
-    console.log(data)
 
-    res.status(200).json({message: 'Peticion realizada con exito'})
+    res.status(200).json( data )
   } catch (error) {
     console.log({error})
     

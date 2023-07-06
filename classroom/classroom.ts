@@ -12,5 +12,5 @@ oAuth2Client.setCredentials({ refresh_token: process.env.REFRESH_TOKEN })
 export const classroom = google.classroom({
   version: 'v1',
   auth: oAuth2Client,
-  // key: process.env.API_KEY
+  key: process.env.API_KEY
 })

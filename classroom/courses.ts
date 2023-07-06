@@ -2,20 +2,41 @@ import { classroom_v1 } from "googleapis"
 import { classroom } from "./"
 
 
-export const getCourses = async(): Promise<classroom_v1.Schema$ListCoursesResponse> => {
+export const getCourses = async( nameCourse: string): Promise<classroom_v1.Schema$Course[] | undefined | classroom_v1.Schema$Course> => {
+
+  try {
+    
+    const { data } = await classroom.courses.list()
+    const { courses } = data
+
+    return nameCourse === 'all' ? courses : courses?.find( course => course.name === nameCourse)
   
+    
+  } catch (error) {
+    
+    return []
+  }
+  
+
+}
+
+export const getCourseByName = async( name: string ) => {
   const { data } = await classroom.courses.list()
+  const { courses } = data
 
-  return data
-}
-
-export const getCourseByName = async( name: string) => {
-  // TODO: Realizar metodo para obtener un solo curso
+  return courses?.find( course => course.name === name )
 }
 
 
-export const createCours = async() => {
-  // TODO: Realizar metodo para crear un solo curso
+export const createCourse = async() => {
+  const courseCreated = await classroom.courses.create({
+    requestBody: {
+      ownerId: 'me',
+      name: 'Ejemplo 3'
+    }
+  })
+
+  return courseCreated
 }
 
 export const deleteAllCourses = () => {
