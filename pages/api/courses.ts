@@ -12,6 +12,8 @@ export default function handler (req: NextApiRequest, res: NextApiResponse<Data>
       return createCourse( req, res )
     case 'GET':
       return getCourses( req, res )
+    case 'DELETE':
+      return deleteCourses( req, res )
   
     default:
       return res.status(400).json({ message: 'Bad request' })
@@ -34,8 +36,24 @@ const getCourses = async ( req: NextApiRequest, res:NextApiResponse<Data> ) => {
 
   const course = await courses.getCourses(nameCourse)
 
-  if( !course ) return res.status(400).json({ message: `Error al buscar curso`})
+  console.log({ course, nameCourse })
+
+  if( !course) return res.status(400).json({ message: `Error en classroom verificar logss`})
+  if( course.length === 0) return res.status(400).json({ message: `Error al buscar curso con el nombre ${nameCourse}`})
 
   return res.status(200).json( course )
+  
+}
+const deleteCourses = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
+
+  const { idCourse = '' } = req.body
+
+  const isDeletedCourses = idCourse === ''
+    ? await courses.deleteAllCourses()
+    : await courses.deletecourse( idCourse )
+
+  return isDeletedCourses 
+    ? res.status(200).json({ message: 'Borrado de curso(s) realizada correctamente'})
+    : res.status(400).json({ message: 'Error al eliminar curso(s), verificar logs '})
   
 }
