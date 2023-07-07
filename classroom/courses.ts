@@ -65,11 +65,16 @@ export const deleteAllCourses = async (): Promise<boolean> => {
   }
 }
 
-export const deletecourse = async ( id: string ) => {
+export const deletecourse = async ( course: classroom_v1.Schema$Course ) => {
   
   try {
+
+    const newCourseState = await changeStateOfCourseToDelete( course )
+
+    if( !newCourseState ) throw new Error('Error al realizar cambio de estado en el curso')
+
     await classroom.courses.delete({
-      id
+      id: newCourseState.id!
     })
 
     return true
@@ -100,23 +105,4 @@ const changeStateOfCourseToDelete = async ( course: classroom_v1.Schema$Course )
   }
 }
 
-export const setTeacher = async () => {
-
-  
-  const teacher = await classroom.invitations.create({
-    requestBody: {
-      role: 'TEACHER',
-      courseId: '615839955678',
-      userId: 'ugalindo448@gmail.com'
-    }
-  })
-
-  console.log(teacher.data)
-
-  // await classroom.invitations.accept({
-  //   id: teacher.data.id!
-  // })
-
-  return teacher
-}
 

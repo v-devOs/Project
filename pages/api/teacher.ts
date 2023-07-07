@@ -8,7 +8,7 @@ type Data = {
 export default async function handler (req: NextApiRequest, res: NextApiResponse<Data>) {
   
   try {
-    const teacher = await courses.setTeacher()
+    // const teacher = await courses.setTeacher()
 
     // console.log(teacher)
 
