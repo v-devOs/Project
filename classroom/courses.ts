@@ -17,7 +17,6 @@ export const getCourses = async( nameCourse: string): Promise<classroom_v1.Schem
     return []
   }
   
-
 }
 
 export const getCourseByName = async( name: string ) => {

@@ -1,9 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { classroom_v1 } from 'googleapis'
 import { courses } from '@/classroom'
-import { GaxiosResponse } from 'gaxios'
+import { classroomResponse } from '@/types'
 
-type Data = { message: string } | classroom_v1.Schema$ListCoursesResponse | GaxiosResponse<classroom_v1.Schema$Course>
+type Data = { message: string } | classroomResponse
 
 export default function handler (req: NextApiRequest, res: NextApiResponse<Data>) {
 
@@ -36,19 +35,10 @@ const getCourses = async ( req: NextApiRequest, res:NextApiResponse<Data> ) => {
 
   const { nameCourse = 'all' } = req.query as { nameCourse: string }
 
-  try {
-    const data = await courses.getCourses( nameCourse )
+  const course = await courses.getCourses(nameCourse)
 
-    if( data === undefined ){
-       throw new Error(`Curso no encontrado con el nombre de ${nameCourse}`)
-       return res.status(400).json({message: ''})
-    }
+  if( !course ) return res.status(400).json({ message: `Error al buscar curso`})
 
-    res.status(200).json(data)
-  } catch (error) {
-    
-    console.log(error)
-
-    res.status(400).json({message: 'Error al mostrar cursos, verificar logs de la consonla'})
-  }
+  return res.status(200).json( course )
+  
 }
