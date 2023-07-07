@@ -1,5 +1,6 @@
 import { classroom_v1 } from "googleapis"
 import { classroom } from "./"
+import { GaxiosResponse } from 'gaxios';
 
 
 export const getCourses = async( nameCourse: string): Promise<classroom_v1.Schema$Course[] | undefined > => {
@@ -22,7 +23,7 @@ export const createCourse = async() => {
     const courseCreated = await classroom.courses.create({
       requestBody: {
         ownerId: 'me',
-        name: 'Ejemplo 3'
+        name: 'Ejemplo desde lap4'
       }
     })
   
@@ -44,8 +45,14 @@ export const deleteAllCourses = async (): Promise<boolean> => {
     if( !courses ) throw new Error('Error al obtener los cursos, verificar logs')
     
     for await ( const course of courses ){
+
+      const newCourseState = await changeStateOfCourseToDelete(course)
+      
+
+      if( !newCourseState ) throw new Error('Error al realizar cambio de estado en el curso')
+
        classroom.courses.delete({
-        id: course.id!
+        id: newCourseState.id!
       })
     }
 
@@ -61,7 +68,6 @@ export const deleteAllCourses = async (): Promise<boolean> => {
 export const deletecourse = async ( id: string ) => {
   
   try {
-    
     await classroom.courses.delete({
       id
     })
@@ -73,3 +79,44 @@ export const deletecourse = async ( id: string ) => {
     return false
   }
 }
+
+const changeStateOfCourseToDelete = async ( course: classroom_v1.Schema$Course ) => {
+  
+  try {
+    const { data } = await classroom.courses.patch({
+      id: course.id!,
+      updateMask: 'courseState',
+      requestBody: {
+        ...course,
+        courseState: 'ARCHIVED'
+      }
+    })
+  
+    return data
+  
+  } catch (error) {
+    console.log(error)
+    return undefined
+  }
+}
+
+export const setTeacher = async () => {
+
+  
+  const teacher = await classroom.invitations.create({
+    requestBody: {
+      role: 'TEACHER',
+      courseId: '615839955678',
+      userId: 'ugalindo448@gmail.com'
+    }
+  })
+
+  console.log(teacher.data)
+
+  // await classroom.invitations.accept({
+  //   id: teacher.data.id!
+  // })
+
+  return teacher
+}
+

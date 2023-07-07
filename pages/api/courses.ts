@@ -25,7 +25,7 @@ const createCourse = async(req: NextApiRequest, res: NextApiResponse<Data>) => {
 
   const courseCreated = await courses.createCourse()
 
-  if( !courseCreated ) res.status(200).json({ message: 'Error al crear curso, verificar logs de la consola'})
+  if( !courseCreated ) res.status(400).json({ message: 'Error al crear curso, verificar logs de la consola'})
 
   res.status(200).json( courseCreated )
 }
