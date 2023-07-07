@@ -1,9 +1,6 @@
 import { classroom } from "./classroom"
 
 
-
-
-
 export const inivteTeacher = async () => {
   try {
 
@@ -11,13 +8,15 @@ export const inivteTeacher = async () => {
       requestBody: {
         userId: 'ugalindo448@gmail.com',
         courseId: '615857821644', // idcourseId de prueba, generar modalidad dinamica,
-        role: 'TEACHER'
+        role: 'TEACHER' // TEACHER, STUDENT
       }
     })
 
-    return invitedTeacher
+    return true
     
   } catch (error) {
     
+    console.log(error)
+    return false
   }
 }
