@@ -2,7 +2,7 @@ import { classroom_v1 } from "googleapis"
 import { classroom } from "./"
 
 
-export const getCourses = async( nameCourse: string): Promise<classroom_v1.Schema$Course[] | undefined | classroom_v1.Schema$Course> => {
+export const getCourses = async( nameCourse = 'all' ): Promise<classroom_v1.Schema$Course[] | undefined | classroom_v1.Schema$Course> => {
 
   try {
     
@@ -11,33 +11,31 @@ export const getCourses = async( nameCourse: string): Promise<classroom_v1.Schem
 
     return nameCourse === 'all' ? courses : courses?.find( course => course.name === nameCourse)
   
-    
   } catch (error) {
     
     return []
   }
-  
 }
-
-export const getCourseByName = async( name: string ) => {
-  const { data } = await classroom.courses.list()
-  const { courses } = data
-
-  return courses?.find( course => course.name === name )
-}
-
 
 export const createCourse = async() => {
-  const courseCreated = await classroom.courses.create({
-    requestBody: {
-      ownerId: 'me',
-      name: 'Ejemplo 3'
-    }
-  })
+  
+  try {
+    const courseCreated = await classroom.courses.create({
+      requestBody: {
+        ownerId: 'me',
+        name: 'Ejemplo 3'
+      }
+    })
+  
+    return courseCreated
+  } catch (error) {
+    
+    console.log(error)
 
-  return courseCreated
+    return undefined
+  }
 }
 
-export const deleteAllCourses = () => {
+export const deleteAllCourses = async () => {
   // TODO: Realizar metodo para eliminar los cursos
 }

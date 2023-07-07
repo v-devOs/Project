@@ -21,14 +21,11 @@ export default function handler (req: NextApiRequest, res: NextApiResponse<Data>
 
 const createCourse = async(req: NextApiRequest, res: NextApiResponse<Data>) => {
 
-  try {
-    const courseCreated = await courses.createCourse()
-    res.status(200).json( courseCreated )
-  } catch (error) {
-    
-    res.status(200).json({ message: 'Error al crear curso, verificar logs de la consola'})
+  const courseCreated = await courses.createCourse()
 
-  }
+  if( !courseCreated ) res.status(200).json({ message: 'Error al crear curso, verificar logs de la consola'})
+
+  res.status(200).json( courseCreated )
 }
 
 const getCourses = async ( req: NextApiRequest, res:NextApiResponse<Data> ) => {
