@@ -1,8 +1,14 @@
+import { database } from "@/database"
 import { classroom } from "./classroom"
 
 
 // TODO: Debera mejorarse para poder invitar mas de un estudiante en una sola llamada
 export const inviteStudent = async () => {
+
+  // const resp = await database.getStudents()
+
+  // console.log(resp)
+
   try {
 
     await classroom.invitations.create({
