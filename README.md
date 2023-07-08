@@ -1,38 +1,43 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+* #### Por el momento se encuentra aun en el desarrollo del back-end con los endpoints basicos para su manejo, aun falta la incorporacion con unsa base de datos y la creacion de un front-end para admiministrar los servicios que ofrece esta api*
+# Tecnm Classroom Api
+## El proposito del desarrollo de esta aplicacion es crear grupos de classroom usando la api de google cloud y invitar de forma automatica a los maestros y alumnos a sus respectivos grupos
 
-## Getting Started
 
-First, run the development server:
+### Documentacion y guias para levantar de manera propia la apliacion
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+1. [Crear una apliacion en google cloud](https://console.cloud.google.com/)
+2. [Leer hasta la parte de la configuracion de OAUTH](https://stateful.com/blog/gmail-api-node-tutorial)
+3. [Informacion sobre el paquete npm de las apis de google](https://www.npmjs.com/package/googleapis)
+4. [Informacion sobre la api de classroom](https://developers.google.com/classroom/reference/rest?hl=en)
+
+### Configurar las variables de entorno correspondientes que se meustran en el template para tener acceso a la apliacion creada en google cloud
+* API_KEY
+* CLIENT_ID
+* CLIENT_SECRET
+* REDIRECT_URI
+* REFRESH_TOKEN
+
+### Instalar y levantar aplicacion todas las depencias necesarias __ejecutar en terminal__
+
+```
+  1. yarn 
+  2. yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Endpoints de la api creados
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+* ### Endpoint de cursos
+  * #### Crea, muestra y elimina los cursos creados en el proyecto dependiendo del metodo con el que se ejecute la request
+  * http://localhost:3000/api/courses
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+    1. Metodo __GET__ con este metodo podemos enviar un query parameter el cual tendra el nombre de __nameCourse__ con el cual podremos solicitar cursos con este nombre, en el caso de que no sea enviado la respuesta seran todos los cursos existentes
+    
+    2. Metodo __POST__  creaun curso nuevo, se planea que este lea de la base de datos los grupos a crear y los cree de manera automatica sin recibir ningun tipo de informacion en la request, devuelve toda la informacion del curso creado
+    3. Metodo __DELETE__ borra todos los cursos existentes el el proyecto pero se planea implemenatar la funcionalidad de que al recibir el id de un curso en el cuerpo de la request este solo borre el curso deseado
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+* ### Endpoint de maestros y alumnos
+  * #### Por el momento solo es capas de enviar una solicitud a los usuarios para unirse al curso especificado
+  * http://localhost:3000/api/teacher
+  * http://localhost:3000/api/students
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+    1. Metodo __POST__ envia una invitacion de forma automatica al correo electronico del usuario indicado para unirse al curso en el rol que se especifica en la request, de momento trabaja con un ejemplo estatico pero lo optimo es que lea de la base de datos y envie las invitaciones a todos los miembros futuros del curso con su respectivo rol
