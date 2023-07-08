@@ -12,17 +12,19 @@ create table materia(cveMat varchar(4) not null,
                      constraint materiaCK3 check(Creditos between 0 and 10));
 
 create table alumno(noCont varchar(4) not null,
-                    nombre varchar(30),
-					genero varchar(1),
-					fechaNac date,
+            nombre varchar(30),
+					  genero varchar(1),
+					  fechaNac date,
+            email varchar(30)
 					constraint alumnoPK primary key (noCont),
 					Constraint alumnoCK1 check (genero = 'F' or genero = 'M'));
 
 create table maestro(cveMae varchar(4) not null ,
-                     nombre varchar(30),
-                     constraint maestroPK primary key (cveMae)
-
+                    nombre varchar(30),
+                    email varchar(30)
+          constraint maestroPK primary key (cveMae)
 );
+
 create table grupo(cveMat varchar(4) not null,
                    noGpo int not null,
                    cveMae varchar(4),
