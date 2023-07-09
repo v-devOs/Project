@@ -12,7 +12,7 @@ export const getAllCourses = async() => {
 
 
   return new Promise(( resol, reject ) => {
-    databasePool.query('SELECT * FROM vCursosMaesAlum', ( err, data ) => {
+    databasePool.query('SELECT * FROM vGrupoMaestros', ( err, data ) => {
       err ? reject(err) : resol( data ) 
     })
   })
