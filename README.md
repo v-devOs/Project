@@ -45,7 +45,7 @@
     1. Metodo __GET__ con este metodo podemos enviar un query parameter el cual tendra el nombre de __nameCourse__ con el cual podremos solicitar cursos con este nombre, en el caso de que no sea enviado la respuesta seran todos los cursos existentes
   
     2. Metodo __POST__  creaun curso nuevo, se planea que este lea de la base de datos los grupos a crear y los cree de manera automatica sin recibir ningun tipo de informacion en la request, devuelve toda la informacion del curso creado
-    3. Metodo __DELETE__ borra todos los cursos existentes el el proyecto pero se planea implemenatar la funcionalidad de que al recibir el id de un curso en el cuerpo de la request este solo borre el curso deseado
+    3. Metodo __DELETE__ borra todos los cursos existentes el el proyecto pero se planea implemenatar la funcionalidad de que al recibir el id de un curso en el cuerpo de la request este solo borre el curso deseado, para que esto funcione debemos navegar manualmente a nuestra cuenta de classroom y aceptar la invitacion al curso
 
 * ### Endpoint de maestros y alumnos
   * #### Por el momento solo es capaz de enviar una solicitud a los usuarios para unirse al curso especificado

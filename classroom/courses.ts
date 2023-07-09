@@ -1,6 +1,8 @@
 import { classroom_v1 } from "googleapis"
 import { classroom } from "./"
 import { GaxiosResponse } from 'gaxios';
+import { getGroups } from "@/utils";
+import { database } from "@/database";
 
 
 export const getCourses = async( nameCourse: string): Promise<classroom_v1.Schema$Course[] | undefined > => {
@@ -20,21 +22,26 @@ export const getCourses = async( nameCourse: string): Promise<classroom_v1.Schem
 
 export const createCourse = async() => {
 
-  const gruopsToCreate = await 
-
-  try {
-    const courseCreated = await classroom.courses.create({
-      requestBody: {
-        ownerId: 'me',
-        name: 'Ejemplo desde lap4'
-      }
-    })
   
-    return courseCreated
-  } catch (error) {
-    
-    console.log(error)
+  try {
+    const groupsToCreate = await database.getAllGroups()
 
+
+    if( !groupsToCreate ) throw new Error('No se pudieron obtener los grupos de la base de datos')
+
+    for ( const courseToCreate of groupsToCreate ){
+
+      await classroom.courses.create({
+        requestBody: {
+          ownerId: 'me',
+          name: `${courseToCreate.nombreGrupo} ${courseToCreate.noGpo}`
+        }
+      })
+    }
+
+    return true
+  } catch (error) {
+    console.log(error)
     return undefined
   }
 }
