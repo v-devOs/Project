@@ -14,7 +14,7 @@ export const inviteStudent = async () => {
     await classroom.invitations.create({
       requestBody: {
         userId: 'ugalindo710@gmail.com',
-        courseId: '615857821644', // idcourseId de prueba, generar modalidad dinamica,
+        courseId: '615895981215', // idcourseId de prueba, generar modalidad dinamica,
         role: 'STUDENT' // TEACHER, STUDENT
       }
     })
