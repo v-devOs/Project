@@ -1,6 +1,6 @@
 import { IGroup } from "./IGroup";
 
 
-export interface IGrupoMemeber extends IGroup{
+export interface IGroupMember extends IGroup{
   emailMember: string
 }

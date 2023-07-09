@@ -1,18 +1,18 @@
 import { database } from '@/database'
+import { IGroup } from '@/interfaces'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 type Data = {
   message: string
-}
+} | IGroup[]
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
   
 
   try {
     
-    const resp = await database.getAllCourses() as any
+    const resp = await database.getAllGroups()
 
-    console.log(resp)
 
     res.status(200).json(resp)
 
