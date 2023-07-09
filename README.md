@@ -17,6 +17,18 @@
 * REDIRECT_URI
 * REFRESH_TOKEN
 
+### Configurar variables de entorno de la base de datos mysql
+* USER
+* PORT
+* PASSWORD
+* DATABASE
+* HOST
+### Posteriormente deberemos navegar al siguiente directorio __database/config__ y ejecutaremos en nuestro servicio de mysql los siguiente tres archivos 
+1. databaseCrea.sql
+2. seed.sql
+3. views.sql
+
+
 ### Instalar y levantar aplicacion todas las depencias necesarias __ejecutar en terminal__
 
 ```
@@ -31,13 +43,17 @@
   * http://localhost:3000/api/courses
 
     1. Metodo __GET__ con este metodo podemos enviar un query parameter el cual tendra el nombre de __nameCourse__ con el cual podremos solicitar cursos con este nombre, en el caso de que no sea enviado la respuesta seran todos los cursos existentes
-    
+  
     2. Metodo __POST__  creaun curso nuevo, se planea que este lea de la base de datos los grupos a crear y los cree de manera automatica sin recibir ningun tipo de informacion en la request, devuelve toda la informacion del curso creado
     3. Metodo __DELETE__ borra todos los cursos existentes el el proyecto pero se planea implemenatar la funcionalidad de que al recibir el id de un curso en el cuerpo de la request este solo borre el curso deseado
 
 * ### Endpoint de maestros y alumnos
-  * #### Por el momento solo es capas de enviar una solicitud a los usuarios para unirse al curso especificado
+  * #### Por el momento solo es capaz de enviar una solicitud a los usuarios para unirse al curso especificado
   * http://localhost:3000/api/teacher
   * http://localhost:3000/api/students
 
     1. Metodo __POST__ envia una invitacion de forma automatica al correo electronico del usuario indicado para unirse al curso en el rol que se especifica en la request, de momento trabaja con un ejemplo estatico pero lo optimo es que lea de la base de datos y envie las invitaciones a todos los miembros futuros del curso con su respectivo rol
+
+* ### Endpoint de pruebas a la base de datos
+  * #### Prueba la coneccion a la base de datos y retorna los valores que solicitemos
+  * http://localhost:3000/api/testing

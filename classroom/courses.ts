@@ -19,6 +19,9 @@ export const getCourses = async( nameCourse: string): Promise<classroom_v1.Schem
 }
 
 export const createCourse = async() => {
+
+  const gruopsToCreate = await 
+
   try {
     const courseCreated = await classroom.courses.create({
       requestBody: {
