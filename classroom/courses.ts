@@ -1,7 +1,6 @@
 import { classroom_v1 } from "googleapis"
 import { classroom } from "./"
 import { GaxiosResponse } from 'gaxios';
-import { getGroups } from "@/utils";
 import { database } from "@/database";
 
 
@@ -12,10 +11,11 @@ export const getCourses = async( nameCourse: string): Promise<classroom_v1.Schem
     const { data } = await classroom.courses.list()
     const { courses } = data
 
+
     return nameCourse === 'all' ? courses : courses?.filter( course => course.name === nameCourse)
   
   } catch (error) {
-    
+    console.log(error)
     return undefined
   }
 }
@@ -75,7 +75,7 @@ export const deleteAllCourses = async (): Promise<boolean> => {
   }
 }
 
-export const deletecourse = async ( course: classroom_v1.Schema$Course ) => {
+export const deleteCourse = async ( course: classroom_v1.Schema$Course ) => {
   
   try {
 

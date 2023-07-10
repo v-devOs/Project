@@ -1,5 +1,5 @@
 import { IGroup, IGroupMember } from '@/interfaces'
-import mysql from 'mysql2'
+import mysql, { RowDataPacket } from 'mysql2'
 
 const databasePool = mysql.createPool({
   host: process.env.HOST,

@@ -1,3 +1,4 @@
+import { members } from '@/classroom'
 import { database } from '@/database'
 import { IGroup } from '@/interfaces'
 import type { NextApiRequest, NextApiResponse } from 'next'
@@ -11,7 +12,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
   try {
     
-    const resp = await database.getAllGroups()
+    const resp = await members.inviteMember('STUDENT') as any
 
 
     res.status(200).json(resp)

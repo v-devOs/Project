@@ -36,9 +36,8 @@ const getCourses = async ( req: NextApiRequest, res:NextApiResponse<Data> ) => {
 
   const course = await courses.getCourses(nameCourse)
 
-  console.log({ course, nameCourse })
 
-  if( !course) return res.status(400).json({ message: `Error en classroom verificar logss`})
+  if( !course ) return res.status(400).json({ message: `Error en classroom verificar logss`})
   if( course.length === 0) return res.status(400).json({ message: `Error al buscar curso con el nombre ${nameCourse}`})
 
   return res.status(200).json( course )
@@ -50,7 +49,7 @@ const deleteCourses = async (req: NextApiRequest, res: NextApiResponse<Data>) =>
 
   const isDeletedCourses = idCourse === ''
     ? await courses.deleteAllCourses()
-    : await courses.deletecourse( idCourse )
+    : await courses.deleteCourse( idCourse )
 
   return isDeletedCourses 
     ? res.status(200).json({ message: 'Borrado de curso(s) realizada correctamente'})
