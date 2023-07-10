@@ -7,7 +7,10 @@ type Data = {
 } | IGroup[]
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
-  
+
+  if( process.env.NODE_ENV === 'production' ){
+    return res.status(400).json({message: 'No tienes acceso a este endpoint'})
+  }
 
   try {
     

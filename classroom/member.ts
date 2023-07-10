@@ -24,7 +24,8 @@ export const inviteMember = async ( role: MemberRole ) => {
       const userId = getUserIdByRole( role, member )
 
       if( !idCourse ) throw new Error('Error al buscar nombre del curso, verificar que exista')
-
+      
+      // Codigo funcional, no descomentar hasta que se tengas correos electronicos validos en la base de datos
       // classroom.invitations.create({
       //   requestBody: {
       //     userId,
