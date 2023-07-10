@@ -1,4 +1,4 @@
-import { courses, teachers } from '@/classroom'
+import {  members } from '@/classroom'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 type Data = {
@@ -22,9 +22,9 @@ export default async function handler (req: NextApiRequest, res: NextApiResponse
 
 const sendInvitationTeacher = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   
-  const sentCorrectInvitation = await teachers.inivteTeacher()
+  const sentCorrectInvitation = await members.inviteMember('TEACHER')
 
   return sentCorrectInvitation
-    ? res.status(200).json({ message: 'Invitacion enviada correctamente'})
+    ? res.status(200).json({ message: 'Invitaciones enviadas correctamente'})
     : res.status(400).json({ message: 'Error al enviar invitacion, verificar logs del servidor'})
 }
